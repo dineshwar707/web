@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | University Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+        }
+        .sidebar {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active-link {
+            background-color: var(--gray-200);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .panel {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-200);
+            text-align: left;
+        }
+        th {
+            background-color: var(--gray-200);
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="srtd_logo.svg" alt="SRTD Logo" class="logo-icon">
+                <h1>SRTD University</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="registration.html">Admissions</a></li>
+                    <li><a href="exam_registration.html">Exams</a></li>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="login.html" id="logoutLink">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h2 id="welcomeHeading" style="margin-bottom: 1.5rem;">Welcome</h2>
+        
+        <div class="dashboard-grid">
+            <aside class="sidebar">
+                <h3>Quick Menu</h3>
+                <ul style="margin-top: 1rem;">
+                    <li><a href="#" class="active-link">Profile Overview</a></li>
+                    <li><a href="#">Course Materials</a></li>
+                    <li><a href="#">Assignment Submission</a></li>
+                    <li><a href="#">Attendance Record</a></li>
+                    <li><a href="exam_registration.html">Register for Exams</a></li>
+                    <li><a href="#">Fee Payment</a></li>
+                </ul>
+            </aside>
+            
+            <div class="main-content">
+                <!-- Student Profile Card with Roll Number -->
+                <section class="panel" style="background: linear-gradient(135deg, #ffffff, #f7fafc); border-left: 5px solid var(--accent-color); margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                        <div>
+                            <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: #718096; font-weight: bold;">Student Academic Profile</span>
+                            <h3 id="profileName" style="margin: 4px 0; color: var(--primary-color); font-size: 1.4rem;">Student</h3>
+                            <p id="profileProgram" style="margin: 0; color: #4a5568; font-size: 0.95rem;">Program details</p>
+                        </div>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <div style="background: white; border: 1px solid var(--gray-200); padding: 8px 16px; border-radius: 6px;">
+                                <div style="font-size: 0.75rem; color: #718096; font-weight: 600;">ROLL NUMBER</div>
+                                <div style="font-size: 1.1rem; font-weight: 800; color: var(--accent-color);">Not assigned</div>
+                            </div>
+                            <div style="background: white; border: 1px solid var(--gray-200); padding: 8px 16px; border-radius: 6px;">
+                                <div style="font-size: 0.75rem; color: #718096; font-weight: 600;">ENROLLMENT ID</div>
+                                <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-color);">Not assigned</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Recent Attendance</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject Code</th>
+                                <th>Subject Name</th>
+                                <th>Total Classes</th>
+                                <th>Attended</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CS101</td>
+                                <td>Intro to Programming</td>
+                                <td>40</td>
+                                <td>36</td>
+                                <td><span style="color: green; font-weight: bold;">90%</span></td>
+                            </tr>
+                            <tr>
+                                <td>MA101</td>
+                                <td>Engineering Math I</td>
+                                <td>45</td>
+                                <td>35</td>
+                                <td><span style="color: orange; font-weight: bold;">77.7%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                
+                <section class="panel">
+                    <h3>Pending Assignments</h3>
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="assignment_id">Select Assignment</label>
+                            <select id="assignment_id" name="assignment_id" required>
+                                <option value="">-- Select --</option>
+                                <option value="cs101_1">CS101 - Array Project (Due: 15 Oct)</option>
+                                <option value="ma101_2">MA101 - Calculus Worksheet (Due: 18 Oct)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="upload_file">Upload PDF Document</label>
+                            <input type="file" id="upload_file" name="upload_file" accept=".pdf" required>
+                        </div>
+                        <button type="submit" class="btn">Submit Assignment</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SRTD University Student Management Portal.</p>
+    </footer>
+    <script src="app.js" defer></script>
+</body>
+</html>

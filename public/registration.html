@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | University Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="srtd_logo.svg" alt="SRTD Logo" class="logo-icon">
+                <h1>SRTD University</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="registration.html" class="active">Admissions</a></li>
+                    <li><a href="exam_registration.html">Exams</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">New Student Registration</h2>
+            
+            <form id="registrationForm" action="/api/register" method="POST" enctype="multipart/form-data">
+                <div class="form-grid">
+                    <!-- Input 1: text -->
+                    <div class="form-group">
+                        <label for="fname">First Name *</label>
+                        <input type="text" id="fname" name="fname" placeholder="Enter first name" required maxlength="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lname">Last Name *</label>
+                        <input type="text" id="lname" name="lname" placeholder="Enter last name" required maxlength="50">
+                    </div>
+
+                    <!-- Input 2: email -->
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="example@domain.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    </div>
+
+                    <!-- Input 3: password -->
+                    <div class="form-group">
+                        <label for="pwd">Create Password *</label>
+                        <input type="password" id="pwd" name="password" placeholder="Min. 8 characters" required minlength="8" maxlength="128">
+                    </div>
+
+                    <!-- Input 4: date -->
+                    <div class="form-group">
+                        <label for="dob">Date of Birth *</label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+
+                    <!-- Input 5: number -->
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" min="16" max="100" placeholder="e.g. 18">
+                    </div>
+
+                    <!-- Input 6: radio -->
+                    <div class="form-group">
+                        <label>Gender *</label>
+                        <div class="radio-group">
+                            <input type="radio" id="male" name="gender" value="male" required>
+                            <label for="male" style="margin:0; font-weight:normal;">Male</label>
+                            
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female" style="margin:0; font-weight:normal;">Female</label>
+                            
+                            <input type="radio" id="other" name="gender" value="other">
+                            <label for="other" style="margin:0; font-weight:normal;">Other</label>
+                        </div>
+                    </div>
+
+                    <!-- Input 7: file -->
+                    <div class="form-group">
+                        <label for="photo">Upload Passport Photo *</label>
+                        <input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp" required>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label for="course">Select Program *</label>
+                    <select id="course" name="course" required>
+                        <option value="">-- Choose a Program --</option>
+                        <option value="btech">B.Tech Computer Science</option>
+                        <option value="bba">Bachelor of Business Admin</option>
+                        <option value="bsc">B.Sc. Mathematics</option>
+                        <option value="mca">Master of Computer Applications</option>
+                    </select>
+                </div>
+
+                <!-- Input 8: checkbox -->
+                <div class="form-group checkbox-group" style="margin-top: 1.5rem;">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms" style="margin:0; font-weight:normal;">I agree to the University <a href="#">Terms and Conditions</a></label>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-top: 2rem;">
+                    <!-- Input 9 & 10: submit and reset -->
+                    <input type="submit" value="Register Now" class="btn" style="flex: 1;">
+                    <input type="reset" value="Clear Form" class="btn" style="flex: 1; background-color: var(--gray-400); color: var(--text-color);">
+                </div>
+                <p id="formMessage" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SRTD University Student Management Portal.</p>
+    </footer>
+    <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+/* CSS Variables */
+:root {
+  --primary-color: #1a365d;
+  --secondary-color: #2b6cb0;
+  --accent-color: #ed8936;
+  --bg-color: #f7fafc;
+  --text-color: #2d3748;
+  --white: #ffffff;
+  --gray-200: #e2e8f0;
+  --gray-400: #cbd5e0;
+}
+
+/* Universal Selector */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Element Selector */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Grouping Selector */
+h1, h2, h3, h4 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+/* Navigation Layout using Flexbox */
+header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--white);
+  padding: 1rem 5%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.logo:hover .logo-icon {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.logo h1 {
+  color: var(--white);
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Pseudo-class Selector */
+nav ul li a:hover, nav ul li a.active {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+/* Main Content Layout */
+main {
+  padding: 2rem 5%;
+  min-height: calc(100vh - 150px);
+}
+
+/* Hero Section with Grid Layout */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 3rem;
+  background-color: var(--white);
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.hero-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #4a5568;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 25px;
+  background-color: var(--accent-color);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background-color: #dd6b20;
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 3rem;
+}
+
+.feature-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  flex: 1;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  border-bottom: 4px solid var(--secondary-color);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Form Styles */
+.form-container {
+  background-color: var(--white);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* Form Controls */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="time"],
+input[type="month"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--gray-400);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2);
+}
+
+.radio-group, .checkbox-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Grid Layout for Forms */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: auto;
+}
+
+/* Media Queries for Responsive Web Design */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .features {
+    flex-direction: column;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

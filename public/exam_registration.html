@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Examination Portal | SRTD University</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Modern Styling for Exam Registration */
+        :root {
+            --success-color: #38a169;
+            --warning-color: #d69e2e;
+            --info-color: #3182ce;
+            --purple-color: #805ad5;
+            --card-border: #e2e8f0;
+            --badge-bg: #edf2f7;
+        }
+
+        .portal-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Top Hero & Status Alert */
+        .exam-status-bar {
+            background: linear-gradient(135deg, #ffffff, #f7fafc);
+            border: 1px solid var(--gray-200);
+            border-left: 6px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .status-items {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-item .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .status-item .value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+
+        .badge-warning {
+            background-color: #feebc8;
+            color: #744210;
+        }
+
+        /* Interactive Tabs */
+        .portal-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 0px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        .tab-btn.active {
+            color: var(--secondary-color);
+            border-bottom-color: var(--secondary-color);
+            background: rgba(43, 108, 176, 0.05);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enhanced Form Layout */
+        .exam-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-200);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Subject Selection Table */
+        .subject-table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .subject-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .subject-table th {
+            background-color: #f7fafc;
+            color: var(--primary-color);
+            padding: 12px 16px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .subject-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-200);
+            color: var(--text-color);
+        }
+
+        .subject-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .subject-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .tag-theory {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .tag-lab {
+            background-color: #feebc8;
+            color: #744210;
+        }
+
+        .tag-elective {
+            background-color: #e9d8fd;
+            color: #44337a;
+        }
+
+        /* Backlog Section Accordion */
+        .backlog-box {
+            background-color: #f7fafc;
+            border: 1px dashed var(--gray-400);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        /* Fee Summary Card */
+        .fee-card {
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 18px rgba(26, 54, 93, 0.25);
+        }
+
+        .fee-card h3 {
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fee-breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .fee-breakdown-row.total-row {
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-bottom: none;
+            padding-top: 12px;
+            color: #feebc8;
+        }
+
+        /* Payment Methods Grid */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 1.25rem 0;
+        }
+
+        .payment-option-card {
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            background: white;
+        }
+
+        .payment-option-card:hover {
+            border-color: var(--secondary-color);
+            background: rgba(43, 108, 176, 0.02);
+        }
+
+        .payment-option-card.selected {
+            border-color: var(--accent-color);
+            background: #fffaf0;
+            box-shadow: 0 0 0 1px var(--accent-color);
+        }
+
+        .payment-icon {
+            font-size: 1.75rem;
+            margin-bottom: 6px;
+        }
+
+        /* Admit Card Layout */
+        .hall-ticket-container {
+            background: white;
+            border: 2px solid #2d3748;
+            border-radius: 8px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .watermark-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(26, 54, 93, 0.04);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .ticket-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px double #2d3748;
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ticket-title {
+            text-align: center;
+            flex: 1;
+        }
+
+        .ticket-title h2 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
+
+        .ticket-title p {
+            margin: 4px 0 0;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .ticket-qr {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #4a5568;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            text-align: center;
+            padding: 4px;
+            background: #f7fafc;
+        }
+
+        .ticket-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            margin-bottom: 1.5rem;
+        }
+
+        .ticket-details-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ticket-details-table td {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .ticket-details-table td.detail-label {
+            font-weight: 700;
+            color: #4a5568;
+            width: 35%;
+        }
+
+        .ticket-photo-box {
+            border: 1px solid #cbd5e0;
+            padding: 8px;
+            text-align: center;
+            border-radius: 4px;
+            background: #f7fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ticket-photo-box img {
+            width: 100px;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #a0aec0;
+            border-radius: 4px;
+        }
+
+        .ticket-schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .ticket-schedule-table th, .ticket-schedule-table td {
+            border: 1px solid #cbd5e0;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .ticket-schedule-table th {
+            background-color: #edf2f7;
+            color: var(--primary-color);
+        }
+
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 3rem;
+            padding-top: 1rem;
+        }
+
+        .sign-box {
+            text-align: center;
+            border-top: 1px solid #718096;
+            width: 180px;
+            padding-top: 5px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Timetable Accordion / Schedule Cards */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .schedule-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-left: 4px solid var(--secondary-color);
+            transition: transform 0.2s;
+        }
+
+        .schedule-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .schedule-card .date-badge {
+            display: inline-block;
+            background: #ebf8ff;
+            color: #2b6cb0;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .schedule-card h4 {
+            margin: 0 0 6px 0;
+            color: var(--primary-color);
+        }
+
+        .schedule-card p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        /* Toast Message */
+        .toast-msg {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #2d3748;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast-msg.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-success {
+            border-left: 5px solid #48bb78;
+        }
+
+        .toast-error {
+            border-left: 5px solid #e53e3e;
+        }
+
+        /* Print Media Styles */
+        @media print {
+            header, footer, .portal-tabs, .exam-status-bar, .print-hide-btn, nav {
+                display: none !important;
+            }
+
+            body, main {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .tab-panel {
+                display: none !important;
+            }
+
+            #admit-card-tab {
+                display: block !important;
+            }
+
+            .hall-ticket-container {
+                box-shadow: none !important;
+                border: 2px solid black !important;
+                width: 100% !important;
+                padding: 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="srtd_logo.svg" alt="SRTD Logo" class="logo-icon">
+                <h1>SRTD University</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="registration.html">Admissions</a></li>
+                    <li><a href="exam_registration.html" class="active">Exams</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="portal-wrapper">
+            
+            <!-- Live Examination Status Bar -->
+            <div class="exam-status-bar">
+                <div class="status-items">
+                    <div class="status-item">
+                        <span class="label">Examination Cycle</span>
+                        <span class="value">Fall/Winter 2026 Regular</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Eligibility Status</span>
+                        <span class="value"><span class="badge-pill badge-success">✓ Eligible (86.4% Attendance)</span></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Fee Clearance</span>
+                        <span class="value"><span class="badge-pill badge-success">✓ No Dues Pending</span></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Registration Window</span>
+                        <span class="value" style="color: var(--accent-color);">⏳ Closes in 4 Days</span>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn" onclick="switchTab('admit-card-tab')" style="background-color: var(--primary-color); font-size: 0.85rem; padding: 8px 16px;">
+                        🎫 View Admit Card
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="portal-tabs">
+                <button class="tab-btn active" onclick="switchTab('registration-tab')">
+                    📝 Exam Registration Form
+                </button>
+                <button class="tab-btn" onclick="switchTab('admit-card-tab')">
+                    🎫 Admit Card / Hall Ticket
+                </button>
+                <button class="tab-btn" onclick="switchTab('timetable-tab')">
+                    📅 Master Date Sheet & Centers
+                </button>
+                <button class="tab-btn" onclick="switchTab('guidelines-tab')">
+                    📋 Regulations & FAQ
+                </button>
+            </div>
+
+            <!-- TAB 1: EXAM REGISTRATION FORM -->
+            <div id="registration-tab" class="tab-panel active">
+                <form id="examForm" data-payment-method="card" onsubmit="handleRegistrationSubmit(event)">
+                    
+                    <!-- Section 1: Verified Student Details -->
+                    <div class="exam-card">
+                        <div class="card-header">
+                            <h3>👤 Candidate Academic Profile</h3>
+                            <span class="badge-pill" style="background:#e2e8f0; color:#4a5568;">Verified by SRTD SIS</span>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="roll_no">Examination Roll Number *</label>
+                                <input type="text" id="roll_no" name="roll_no" value="24CS1044" required placeholder="e.g. 24CS1044">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="enrollment">University Enrollment ID *</label>
+                                <input type="text" id="enrollment" name="enrollment" value="SRTD-2024-8932" required placeholder="e.g. SRTD-2024-8932">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="student_name">Candidate Full Name *</label>
+                                <input type="text" id="student_name" name="student_name" value="Tyler Durden" required placeholder="Enter candidate full name">
+                            </div>
+
+                            <!-- Photo Upload Field -->
+                            <div class="form-group" style="grid-column: 1 / -1; background: #f7fafc; padding: 1rem; border-radius: 8px; border: 1px dashed var(--gray-400);">
+                                <label for="student_photo_input" style="font-weight: 700; color: var(--primary-color); margin-bottom: 8px;">Candidate Admit Card Photograph</label>
+                                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                                    <img id="formPhotoPreview" 
+                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/440px-Brad_Pitt_2019_by_Glenn_Francis.jpg" 
+                                         alt="Candidate Photo Preview" 
+                                         style="width: 70px; height: 85px; object-fit: cover; border-radius: 6px; border: 2px solid #cbd5e0;">
+                                    <div style="flex: 1; min-width: 220px;">
+                                        <input type="file" id="student_photo_input" accept="image/*" onchange="previewCandidatePhoto(event)" style="font-size: 0.9rem;">
+                                        <p style="margin: 4px 0 0; font-size: 0.8rem; color: #718096;">
+                                            Select any photo from your computer (JPG, PNG, WEBP). It will immediately appear on your official Admit Card / Hall Ticket.
+                                        </p>
+                                    </div>
+                                    <button type="button" class="btn" onclick="document.getElementById('student_photo_input').click()" style="background-color: var(--secondary-color); font-size: 0.85rem; padding: 8px 16px;">
+                                        📁 Choose Photo
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="program">Degree & Major</label>
+                                <input type="text" id="program" name="program" value="B.Tech - Computer Science & Engineering" readonly style="background-color: #edf2f7;">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="semester">Semester for Examination *</label>
+                                <select id="semester" name="semester" required onchange="updateSemesterSubjects()">
+                                    <option value="4" selected>Semester 4 (Current Regular)</option>
+                                    <option value="1">Semester 1</option>
+                                    <option value="2">Semester 2</option>
+                                    <option value="3">Semester 3</option>
+                                    <option value="5">Semester 5</option>
+                                    <option value="6">Semester 6</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exam_session">Examination Session *</label>
+                                <select id="exam_session" name="exam_session" required>
+                                    <option value="Nov-Dec 2026 Regular" selected>November - December 2026 (End Term)</option>
+                                    <option value="Jan 2027 Supplementary">January 2027 (Supplementary / Re-appear)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exam_mode">Preferred Mode of Exam *</label>
+                                <select id="exam_mode" name="exam_mode" required>
+                                    <option value="Physical Pen & Paper" selected>Offline (On-Campus Pen & Paper / OMR)</option>
+                                    <option value="Online Proctored Lab">Online Computer-Based (SRTD Central Lab)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Subject Registration & Credit Calculation -->
+                    <div class="exam-card">
+                        <div class="card-header">
+                            <h3>📚 Course Paper Selection</h3>
+                            <div style="display: flex; gap: 10px;">
+                                <button type="button" class="btn" style="padding: 6px 12px; font-size: 0.8rem; background-color: var(--secondary-color);" onclick="toggleAllSubjects(true)">Select All</button>
+                                <button type="button" class="btn" style="padding: 6px 12px; font-size: 0.8rem; background-color: var(--gray-400); color: var(--text-color);" onclick="toggleAllSubjects(false)">Deselect All</button>
+                            </div>
+                        </div>
+
+                        <p style="color: #718096; font-size: 0.9rem; margin-bottom: 1rem;">
+                            Review your mandatory theory & lab courses. Ensure all required papers are checked for hall ticket inclusion.
+                        </p>
+
+                        <div class="subject-table-container">
+                            <table class="subject-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;">Select</th>
+                                        <th>Subject Code</th>
+                                        <th>Subject Title</th>
+                                        <th>Type</th>
+                                        <th>Credits</th>
+                                        <th>Exam Date</th>
+                                        <th>Fee</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="subjectsTableBody">
+                                    <!-- Populated dynamically via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Open Elective Option -->
+                        <div style="margin-top: 1.5rem; padding: 1rem; background-color: #f7fafc; border-radius: 8px;">
+                            <label for="elective_subject" style="font-weight: 600; color: var(--primary-color); display: block; margin-bottom: 6px;">
+                                Professional / Open Elective Subject (Select One):
+                            </label>
+                            <select id="elective_subject" name="elective_subject" onchange="updateTotalFee()">
+                                <option value="CS405|Artificial Intelligence & Neural Nets|4|₹750" selected>CS405 - Artificial Intelligence & Neural Nets (4 Credits) - ₹750</option>
+                                <option value="CS406|Cloud Computing & DevOps|4|₹750">CS406 - Cloud Computing & DevOps Architecture (4 Credits) - ₹750</option>
+                                <option value="CS407|Cyber Security & Cryptography|4|₹750">CS407 - Cyber Security & Cryptography (4 Credits) - ₹750</option>
+                            </select>
+                        </div>
+
+                        <!-- Backlog / Arrear Examination Accordion -->
+                        <div class="backlog-box">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong style="color: var(--primary-color);">Have Previous Semester Arrears / Backlogs?</strong>
+                                    <p style="margin: 0; font-size: 0.85rem; color: #718096;">Register for supplementary / improvement exams simultaneously.</p>
+                                </div>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+                                    <input type="checkbox" id="enableBacklogCheckbox" onchange="toggleBacklogSection()"> Include Backlog Papers
+                                </label>
+                            </div>
+
+                            <div id="backlogSelectionArea" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--gray-400);">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
+                                    <label class="checkbox-group" style="background: white; padding: 10px; border-radius: 6px; border: 1px solid var(--gray-200);">
+                                        <input type="checkbox" class="backlog-item" value="1000" data-code="MA101" data-name="Engineering Mathematics I (Sem 1)" onchange="updateTotalFee()">
+                                        <span>MA101 - Engineering Math I (₹1,000)</span>
+                                    </label>
+                                    <label class="checkbox-group" style="background: white; padding: 10px; border-radius: 6px; border: 1px solid var(--gray-200);">
+                                        <input type="checkbox" class="backlog-item" value="1000" data-code="PH101" data-name="Applied Physics (Sem 1)" onchange="updateTotalFee()">
+                                        <span>PH101 - Applied Physics (₹1,000)</span>
+                                    </label>
+                                    <label class="checkbox-group" style="background: white; padding: 10px; border-radius: 6px; border: 1px solid var(--gray-200);">
+                                        <input type="checkbox" class="backlog-item" value="1000" data-code="CS202" data-name="Discrete Structures (Sem 2)" onchange="updateTotalFee()">
+                                        <span>CS202 - Discrete Mathematics (₹1,000)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Exam Center & Accommodation -->
+                    <div class="exam-card">
+                        <div class="card-header">
+                            <h3>🏛️ Exam Center & Special Accommodations</h3>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="exam_center">Allocated Exam Center *</label>
+                                <select id="exam_center" name="exam_center" required>
+                                    <option value="SRTD University Main Campus - Academic Block A" selected>SRTD University Main Campus (Academic Block A)</option>
+                                    <option value="SRTD North Campus Auditorium Hall">SRTD North Campus (Auditorium & Exam Wing)</option>
+                                    <option value="SRTD City Centre - Examination Center">SRTD City Centre Annex (Metro Station Block)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emergency_phone">Emergency Contact Mobile Number *</label>
+                                <input type="tel" id="emergency_phone" name="emergency_phone" value="+91 98765 43210" required placeholder="+91 98765 43210" pattern="^(\+91[\-\s]?)?[6-9]\d{4}[\-\s]?\d{5}$">
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1rem;">
+                            <label style="font-weight: 600; color: var(--primary-color); display: block; margin-bottom: 8px;">Special Assistance / Accessibility Requirements:</label>
+                            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                <label class="checkbox-group">
+                                    <input type="checkbox" id="scribe_needed" name="scribe_needed">
+                                    <span style="font-size: 0.9rem;">Scribe / Amannuensis Assistance Required</span>
+                                </label>
+                                <label class="checkbox-group">
+                                    <input type="checkbox" id="ground_floor" name="ground_floor">
+                                    <span style="font-size: 0.9rem;">Ground Floor Seating (Mobility Assistance)</span>
+                                </label>
+                                <label class="checkbox-group">
+                                    <input type="checkbox" id="extra_time" name="extra_time">
+                                    <span style="font-size: 0.9rem;">Compensatory Extra Time (As per PwD norms)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Dynamic Live Fee Calculation & Payment Method -->
+                    <div class="fee-card">
+                        <h3>
+                            <span>💳 Fee Assessment & Invoice</span>
+                            <span id="badgeSubjectCount" class="badge-pill badge-warning" style="font-size: 0.85rem;">4 Papers Selected</span>
+                        </h3>
+                        <div class="fee-breakdown-row">
+                            <span>Regular Semester Papers Fee:</span>
+                            <span id="feeRegularPapers">₹2,600.00</span>
+                        </div>
+                        <div class="fee-breakdown-row">
+                            <span>Practical / Laboratory Exam Assessment:</span>
+                            <span id="feeLabPapers">₹500.00</span>
+                        </div>
+                        <div class="fee-breakdown-row">
+                            <span>Elective Paper Fee:</span>
+                            <span id="feeElectivePaper">₹750.00</span>
+                        </div>
+                        <div class="fee-breakdown-row">
+                            <span>Supplementary / Backlog Paper(s):</span>
+                            <span id="feeBacklogPapers">₹0.00</span>
+                        </div>
+                        <div class="fee-breakdown-row">
+                            <span>Hall Ticket Processing & Marksheet Evaluation:</span>
+                            <span>₹350.00</span>
+                        </div>
+                        <div class="fee-breakdown-row total-row">
+                            <span>Grand Total Amount Payable:</span>
+                            <span id="feeTotalAmount">₹4,200.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Payment Method Selection -->
+                    <div class="exam-card">
+                        <div class="card-header">
+                            <h3>💰 Select Payment Gateway</h3>
+                        </div>
+
+                        <div class="payment-options">
+                            <div class="payment-option-card selected" onclick="selectPaymentOption(this, 'card')">
+                                <div class="payment-icon">💳</div>
+                                <strong>Credit / Debit Card</strong>
+                                <p style="font-size: 0.8rem; color: #718096; margin: 4px 0 0;">RuPay, Visa, Mastercard</p>
+                            </div>
+                            <div class="payment-option-card" onclick="selectPaymentOption(this, 'upi')">
+                                <div class="payment-icon">📱</div>
+                                <strong>UPI & QR Code</strong>
+                                <p style="font-size: 0.8rem; color: #718096; margin: 4px 0 0;">GPay, PhonePe, Paytm, BHIM</p>
+                            </div>
+                            <div class="payment-option-card" onclick="selectPaymentOption(this, 'netbanking')">
+                                <div class="payment-icon">🏦</div>
+                                <strong>Net Banking</strong>
+                                <p style="font-size: 0.8rem; color: #718096; margin: 4px 0 0;">SBI, HDFC, ICICI, PNB & 50+ Banks</p>
+                            </div>
+                            <div class="payment-option-card" onclick="selectPaymentOption(this, 'wallet')">
+                                <div class="payment-icon">🎓</div>
+                                <strong>SRTD Campus Wallet</strong>
+                                <p style="font-size: 0.8rem; color: #718096; margin: 4px 0 0;">Balance: ₹8,500.00</p>
+                            </div>
+                        </div>
+
+                        <!-- Declaration -->
+                        <div style="margin: 1.5rem 0; padding: 1rem; background-color: #fffaf0; border: 1px solid #fbd38d; border-radius: 6px;">
+                            <label class="checkbox-group">
+                                <input type="checkbox" id="declaration" required>
+                                <span style="font-size: 0.88rem; color: #744210;">
+                                    I hereby confirm that all subjects selected above are correct and match my curriculum requirements. I agree to abide by SRTD University's examination code of conduct and anti-ragging/malpractice policies.
+                                </span>
+                            </label>
+                        </div>
+
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button type="submit" class="btn" style="flex: 2; padding: 14px; font-size: 1.05rem;">
+                                🚀 Complete Registration & Generate Admit Card
+                            </button>
+                            <button type="button" class="btn" onclick="saveDraft()" style="flex: 1; background-color: var(--secondary-color); padding: 14px;">
+                                💾 Save Progress
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- TAB 2: ADMIT CARD / HALL TICKET PREVIEW & DOWNLOAD -->
+            <div id="admit-card-tab" class="tab-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;" class="print-hide-btn">
+                    <div>
+                        <h2 style="margin: 0;">Official Examination Admit Card</h2>
+                        <p style="margin: 4px 0 0; color: #718096;">Valid for Entry into SRTD University Examination Centers</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" onclick="window.print()" style="background-color: var(--primary-color);">
+                            🖨️ Print / Save as PDF
+                        </button>
+                        <button class="btn" onclick="downloadSlipMock()" style="background-color: var(--secondary-color);">
+                            📥 Download Hall Ticket (JSON)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hall-ticket-container" id="printableAdmitCard">
+                    <div class="watermark-text">SRTD UNIVERSITY 2026</div>
+
+                    <div class="ticket-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="srtd_logo.svg" alt="SRTD Logo" style="width: 55px; height: 55px; border-radius: 10px; border: 1px solid #cbd5e0;">
+                            <div style="font-size: 2rem; font-weight: 800; color: var(--primary-color);">SRTD</div>
+                        </div>
+                        <div class="ticket-title">
+                            <h2>SRTD UNIVERSITY</h2>
+                            <p>OFFICE OF THE CONTROLLER OF EXAMINATIONS</p>
+                            <p style="font-size: 0.85rem; color: #718096; font-weight: normal;">End-Semester Examinations | Fall/Winter 2026</p>
+                        </div>
+                        <div class="ticket-qr" title="Verification Barcode">
+                            [QR VERIFIED]<br>SRTD-EXAM<br>2026-REG
+                        </div>
+                    </div>
+
+                    <div class="ticket-grid">
+                        <div>
+                            <table class="ticket-details-table">
+                                <tr>
+                                    <td class="detail-label">Candidate Name:</td>
+                                    <td id="ticketCandidateName" style="font-weight: 700; text-transform: uppercase;">Tyler Durden</td>
+                                </tr>
+                                <tr>
+                                    <td class="detail-label">Examination Roll No:</td>
+                                    <td id="ticketRollNo" style="font-weight: 800; color: var(--accent-color);">24CS1044</td>
+                                </tr>
+                                <tr>
+                                    <td class="detail-label">University Enrollment ID:</td>
+                                    <td id="ticketEnrollment" style="font-weight: 700; color: var(--primary-color);">SRTD-2024-8932</td>
+                                </tr>
+                                <tr>
+                                    <td class="detail-label">Program & Branch:</td>
+                                    <td id="ticketProgram">B.Tech - Computer Science & Engineering</td>
+                                </tr>
+                                <tr>
+                                    <td class="detail-label">Semester / Session:</td>
+                                    <td id="ticketSemester">Semester 4 | Nov-Dec 2026 Regular</td>
+                                </tr>
+                                <tr>
+                                    <td class="detail-label">Allocated Center:</td>
+                                    <td id="ticketCenter" style="font-weight: 600;">SRTD University Main Campus (Academic Block A)</td>
+                                </tr>
+                                <tr>
+                                    <td class="detail-label">Reporting Time:</td>
+                                    <td>09:00 AM (Morning Shift) / 01:30 PM (Afternoon Shift)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="ticket-photo-box">
+                            <img id="admitCardPhoto" 
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/440px-Brad_Pitt_2019_by_Glenn_Francis.jpg" 
+                                 alt="Candidate Photo"
+                                 style="width: 100px; height: 120px; object-fit: cover; border: 1px solid #a0aec0; border-radius: 4px;">
+                            <span id="ticketPhotoLabel" style="font-size: 0.7rem; color: #718096; margin-top: 4px;">Verified Photo</span>
+                            <button type="button" class="print-hide-btn" onclick="document.getElementById('student_photo_input').click()" 
+                                    style="margin-top: 6px; background: #edf2f7; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; padding: 3px 8px; cursor: pointer; color: var(--primary-color); font-weight: 600;">
+                                📷 Change Photo
+                            </button>
+                        </div>
+                    </div>
+
+                    <h4 style="margin: 1.5rem 0 0.5rem 0; color: var(--primary-color);">Registered Exam Papers & Seat Schedule:</h4>
+                    
+                    <table class="ticket-schedule-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Paper Code</th>
+                                <th>Paper Title</th>
+                                <th>Exam Date</th>
+                                <th>Shift / Time</th>
+                                <th>Hall & Seat</th>
+                                <th>Invigilator Sign</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketScheduleBody">
+                            <tr>
+                                <td>1</td>
+                                <td>CS401</td>
+                                <td>Design & Analysis of Algorithms</td>
+                                <td>24-Nov-2026</td>
+                                <td>09:30 AM - 12:30 PM</td>
+                                <td>Hall A-102 (Seat 44)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>CS402</td>
+                                <td>Operating Systems & Kernel Architecture</td>
+                                <td>27-Nov-2026</td>
+                                <td>09:30 AM - 12:30 PM</td>
+                                <td>Hall A-102 (Seat 44)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>CS403</td>
+                                <td>Database Management Systems & SQL</td>
+                                <td>01-Dec-2026</td>
+                                <td>09:30 AM - 12:30 PM</td>
+                                <td>Hall A-102 (Seat 44)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>CS404</td>
+                                <td>Theory of Computation & Automata</td>
+                                <td>04-Dec-2026</td>
+                                <td>09:30 AM - 12:30 PM</td>
+                                <td>Hall A-102 (Seat 44)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>CS405</td>
+                                <td>Artificial Intelligence & Neural Nets</td>
+                                <td>08-Dec-2026</td>
+                                <td>02:00 PM - 05:00 PM</td>
+                                <td>Hall B-204 (Seat 19)</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="font-size: 0.8rem; color: #4a5568; line-height: 1.5; margin-top: 1rem; border: 1px solid #e2e8f0; padding: 10px; border-radius: 4px; background: #fdfdfd;">
+                        <strong>Important Instructions for Candidate:</strong>
+                        <ol style="margin-left: 20px; margin-top: 5px;">
+                            <li>Candidate must produce this printed Hall Ticket along with university identity card at the entry gate.</li>
+                            <li>Electronic gadgets including mobile phones, programmable calculators, and smartwatches are strictly prohibited.</li>
+                            <li>No candidate will be allowed entry into examination hall after 15 minutes from commencement of the exam.</li>
+                        </ol>
+                    </div>
+
+                    <div class="ticket-footer">
+                        <div class="sign-box">
+                            Candidate's Signature
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 70px; height: 70px; border: 2px solid var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--accent-color); font-weight: bold; margin: 0 auto 5px auto; transform: rotate(-12deg);">
+                                SRTD SEAL<br>EXAM WING
+                            </div>
+                            <span style="font-size: 0.75rem; color: #718096;">Official Registrar Stamp</span>
+                        </div>
+                        <div class="sign-box">
+                            Controller of Examinations<br>
+                            <span style="font-weight: normal; font-size: 0.75rem;">SRTD University</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: TIMETABLE & CENTER SCHEDULE -->
+            <div id="timetable-tab" class="tab-panel">
+                <div class="exam-card">
+                    <div class="card-header">
+                        <h3>📅 Master Semester Exam Schedule (Fall 2026)</h3>
+                        <input type="text" id="scheduleSearch" placeholder="🔍 Search subject or code..." onkeyup="filterSchedule()" style="max-width: 260px; padding: 6px 12px; font-size: 0.85rem;">
+                    </div>
+
+                    <div class="schedule-grid" id="scheduleGrid">
+                        <div class="schedule-card" data-title="algorithms cs401">
+                            <span class="date-badge">📅 Tuesday, Nov 24, 2026</span>
+                            <h4>CS401 - Design & Analysis of Algorithms</h4>
+                            <p><strong>Timing:</strong> 09:30 AM - 12:30 PM (Morning Shift)</p>
+                            <p><strong>Center:</strong> Academic Block A, Main Campus</p>
+                            <p><strong>Total Duration:</strong> 3 Hours | 100 Marks</p>
+                        </div>
+
+                        <div class="schedule-card" data-title="operating systems cs402">
+                            <span class="date-badge">📅 Friday, Nov 27, 2026</span>
+                            <h4>CS402 - Operating Systems & Kernel Architecture</h4>
+                            <p><strong>Timing:</strong> 09:30 AM - 12:30 PM (Morning Shift)</p>
+                            <p><strong>Center:</strong> Academic Block A, Main Campus</p>
+                            <p><strong>Total Duration:</strong> 3 Hours | 100 Marks</p>
+                        </div>
+
+                        <div class="schedule-card" data-title="database dbms cs403">
+                            <span class="date-badge">📅 Tuesday, Dec 01, 2026</span>
+                            <h4>CS403 - Database Management Systems</h4>
+                            <p><strong>Timing:</strong> 09:30 AM - 12:30 PM (Morning Shift)</p>
+                            <p><strong>Center:</strong> Academic Block A, Main Campus</p>
+                            <p><strong>Total Duration:</strong> 3 Hours | 100 Marks</p>
+                        </div>
+
+                        <div class="schedule-card" data-title="automata theory cs404">
+                            <span class="date-badge">📅 Friday, Dec 04, 2026</span>
+                            <h4>CS404 - Theory of Computation & Automata</h4>
+                            <p><strong>Timing:</strong> 09:30 AM - 12:30 PM (Morning Shift)</p>
+                            <p><strong>Center:</strong> Academic Block A, Main Campus</p>
+                            <p><strong>Total Duration:</strong> 3 Hours | 100 Marks</p>
+                        </div>
+
+                        <div class="schedule-card" data-title="artificial intelligence cs405 elective">
+                            <span class="date-badge">📅 Tuesday, Dec 08, 2026</span>
+                            <h4>CS405 - Artificial Intelligence (Elective)</h4>
+                            <p><strong>Timing:</strong> 02:00 PM - 05:00 PM (Afternoon Shift)</p>
+                            <p><strong>Center:</strong> North Wing Auditorium</p>
+                            <p><strong>Total Duration:</strong> 3 Hours | 100 Marks</p>
+                        </div>
+
+                        <div class="schedule-card" data-title="dbms lab practical cs403l">
+                            <span class="date-badge">📅 Thursday, Dec 10, 2026</span>
+                            <h4>CS403L - DBMS Practical Lab Viva</h4>
+                            <p><strong>Timing:</strong> 10:00 AM - 01:00 PM (Shift 1)</p>
+                            <p><strong>Center:</strong> Computer Lab 301, Tech Block</p>
+                            <p><strong>Total Duration:</strong> 3 Hours | 50 Marks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: REGULATIONS & GUIDELINES -->
+            <div id="guidelines-tab" class="tab-panel">
+                <div class="exam-card">
+                    <div class="card-header">
+                        <h3>📋 Examination Regulations & Instructions</h3>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--secondary-color); margin-bottom: 8px;">✅ Permitted Items & Rules</h4>
+                            <ul style="padding-left: 20px; line-height: 1.8; color: #4a5568; font-size: 0.95rem;">
+                                <li>Original Printed Admit Card signed by Candidate.</li>
+                                <li>Official SRTD University Student ID Card or Govt Photo ID.</li>
+                                <li>Transparent water bottle and transparent stationery pouch.</li>
+                                <li>Non-programmable scientific calculator (for engineering mathematics and physics exams only).</li>
+                                <li>Candidates must be seated in their designated hall at least 20 minutes prior to paper distribution.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="color: #e53e3e; margin-bottom: 8px;">🚫 Prohibited Items & Disciplinary Action</h4>
+                            <ul style="padding-left: 20px; line-height: 1.8; color: #4a5568; font-size: 0.95rem;">
+                                <li>Smartphones, smartwatches, Bluetooth earbuds, or storage devices.</li>
+                                <li>Written notes, chits, textbooks, or unauthorized reference materials.</li>
+                                <li>Interchanging answer booklets or communicating with other examinees.</li>
+                                <li>Any candidate caught indulging in unfair means (UFM) will face immediate debarment for up to 3 academic years.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; background: #ebf8ff; border-radius: 8px; padding: 1.25rem;">
+                        <h4 style="color: #2b6cb0; margin: 0 0 6px 0;">Need Examination Helpline Support?</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: #2d3748;">
+                            Contact SRTD Office of Controller of Examinations: <strong>exams@srtd.edu.in</strong> | Toll Free: <strong>1800-180-7783 (1800-180-SRTD)</strong> | Helpline: <strong>+91 11-2659-7100 / +91 98765 43210</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Floating Toast Message -->
+    <div id="toastMessage" class="toast-msg toast-success">
+        <span>✅ Action completed successfully!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SRTD University Student Management Portal.</p>
+    </footer>
+
+    <!-- Interactive Logic -->
+    <script>
+        // Subject catalogs mapped by semester
+        const semesterSubjectsData = {
+            "1": [
+                { code: "MA101", title: "Engineering Mathematics I", type: "theory", credits: 4, date: "25-Nov-2026", fee: 650 },
+                { code: "PH101", title: "Applied Physics & Optics", type: "theory", credits: 4, date: "28-Nov-2026", fee: 650 },
+                { code: "CS101", title: "Fundamentals of Programming (C/C++)", type: "theory", credits: 4, date: "02-Dec-2026", fee: 650 },
+                { code: "EE101", title: "Basic Electrical & Electronics", type: "theory", credits: 3, date: "05-Dec-2026", fee: 500 },
+                { code: "CS101L", title: "Programming Laboratory", type: "lab", credits: 2, date: "09-Dec-2026", fee: 500 }
+            ],
+            "2": [
+                { code: "MA102", title: "Engineering Mathematics II", type: "theory", credits: 4, date: "25-Nov-2026", fee: 650 },
+                { code: "CS201", title: "Data Structures & Algorithms", type: "theory", credits: 4, date: "28-Nov-2026", fee: 650 },
+                { code: "CS202", title: "Discrete Mathematics", type: "theory", credits: 3, date: "02-Dec-2026", fee: 650 },
+                { code: "EC201", title: "Digital Electronics", type: "theory", credits: 3, date: "05-Dec-2026", fee: 500 },
+                { code: "CS201L", title: "Data Structures Lab", type: "lab", credits: 2, date: "09-Dec-2026", fee: 500 }
+            ],
+            "3": [
+                { code: "CS301", title: "Object Oriented Programming (Java/Python)", type: "theory", credits: 4, date: "24-Nov-2026", fee: 650 },
+                { code: "CS302", title: "Computer Organization & Architecture", type: "theory", credits: 4, date: "27-Nov-2026", fee: 650 },
+                { code: "CS303", title: "Software Engineering & UML", type: "theory", credits: 3, date: "01-Dec-2026", fee: 650 },
+                { code: "MA301", title: "Probability & Statistics", type: "theory", credits: 3, date: "04-Dec-2026", fee: 500 },
+                { code: "CS301L", title: "OOP Java Lab", type: "lab", credits: 2, date: "08-Dec-2026", fee: 500 }
+            ],
+            "4": [
+                { code: "CS401", title: "Design & Analysis of Algorithms", type: "theory", credits: 4, date: "24-Nov-2026", fee: 650 },
+                { code: "CS402", title: "Operating Systems & Kernels", type: "theory", credits: 4, date: "27-Nov-2026", fee: 650 },
+                { code: "CS403", title: "Database Management Systems", type: "theory", credits: 4, date: "01-Dec-2026", fee: 650 },
+                { code: "CS404", title: "Theory of Computation & Automata", type: "theory", credits: 3, date: "04-Dec-2026", fee: 650 },
+                { code: "CS403L", title: "DBMS SQL Practical Lab", type: "lab", credits: 2, date: "10-Dec-2026", fee: 500 }
+            ],
+            "5": [
+                { code: "CS501", title: "Computer Networks & Protocols", type: "theory", credits: 4, date: "24-Nov-2026", fee: 650 },
+                { code: "CS502", title: "Web Technologies & Full Stack", type: "theory", credits: 4, date: "27-Nov-2026", fee: 650 },
+                { code: "CS503", title: "Microprocessors & Embedded Systems", type: "theory", credits: 3, date: "01-Dec-2026", fee: 650 },
+                { code: "CS501L", title: "Networking Lab", type: "lab", credits: 2, date: "08-Dec-2026", fee: 500 }
+            ],
+            "6": [
+                { code: "CS601", title: "Compiler Design & Code Generation", type: "theory", credits: 4, date: "24-Nov-2026", fee: 650 },
+                { code: "CS602", title: "Information & Network Security", type: "theory", credits: 4, date: "27-Nov-2026", fee: 650 },
+                { code: "CS603", title: "Machine Learning & Data Mining", type: "theory", credits: 4, date: "01-Dec-2026", fee: 650 },
+                { code: "CS603L", title: "Machine Learning Lab", type: "lab", credits: 2, date: "08-Dec-2026", fee: 500 }
+            ]
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSemesterSubjects();
+
+            // Real-time synchronization of Roll No and Name with Admit Card
+            document.getElementById('student_name')?.addEventListener('input', (e) => {
+                const name = e.target.value.trim() || "Tyler Durden";
+                document.getElementById('ticketCandidateName').textContent = name;
+            });
+
+            document.getElementById('roll_no')?.addEventListener('input', (e) => {
+                const roll = e.target.value.trim() || "24CS1044";
+                document.getElementById('ticketRollNo').textContent = roll;
+            });
+
+            document.getElementById('enrollment')?.addEventListener('input', (e) => {
+                const enroll = e.target.value.trim() || "SRTD-2024-8932";
+                document.getElementById('ticketEnrollment').textContent = enroll;
+            });
+        });
+
+        // Handle Photo Upload & Live Admit Card Preview
+        function previewCandidatePhoto(event) {
+            const file = event.target.files?.[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    const cardPhoto = document.getElementById('admitCardPhoto');
+                    const formPrev = document.getElementById('formPhotoPreview');
+                    if (cardPhoto) cardPhoto.src = dataUrl;
+                    if (formPrev) formPrev.src = dataUrl;
+                    showToast("📸 Candidate photograph updated successfully on Admit Card!");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+            const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick')?.includes(tabId));
+            if (targetBtn) targetBtn.classList.add('active');
+
+            const targetPanel = document.getElementById(tabId);
+            if (targetPanel) targetPanel.classList.add('active');
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        }
+
+        // Populate subjects for chosen semester
+        function updateSemesterSubjects() {
+            const sem = document.getElementById('semester').value || "4";
+            const subjects = semesterSubjectsData[sem] || semesterSubjectsData["4"];
+            const tbody = document.getElementById('subjectsTableBody');
+            tbody.innerHTML = '';
+
+            subjects.forEach((sub, idx) => {
+                const tr = document.createElement('tr');
+                const tagClass = sub.type === 'theory' ? 'tag-theory' : 'tag-lab';
+                tr.innerHTML = `
+                    <td style="text-align: center;">
+                        <input type="checkbox" class="subject-checkbox" value="${sub.fee}" data-code="${sub.code}" data-title="${sub.title}" data-type="${sub.type}" data-date="${sub.date}" checked onchange="updateTotalFee()">
+                    </td>
+                    <td><strong>${sub.code}</strong></td>
+                    <td>${sub.title}</td>
+                    <td><span class="subject-tag ${tagClass}">${sub.type.toUpperCase()}</span></td>
+                    <td>${sub.credits}</td>
+                    <td>${sub.date}</td>
+                    <td><strong>₹${sub.fee.toLocaleString('en-IN')}</strong></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            updateTotalFee();
+        }
+
+        // Toggle All Subjects Checkboxes
+        function toggleAllSubjects(selectState) {
+            document.querySelectorAll('.subject-checkbox').forEach(cb => {
+                cb.checked = selectState;
+            });
+            updateTotalFee();
+        }
+
+        // Toggle Backlog Section Visibility
+        function toggleBacklogSection() {
+            const area = document.getElementById('backlogSelectionArea');
+            const chk = document.getElementById('enableBacklogCheckbox');
+            area.style.display = chk.checked ? 'block' : 'none';
+            if (!chk.checked) {
+                document.querySelectorAll('.backlog-item').forEach(cb => cb.checked = false);
+            }
+            updateTotalFee();
+        }
+
+        // Live Fee Calculation
+        function updateTotalFee() {
+            let regularTotal = 0;
+            let labTotal = 0;
+            let regularCount = 0;
+
+            document.querySelectorAll('.subject-checkbox:checked').forEach(cb => {
+                const fee = parseFloat(cb.value) || 0;
+                const type = cb.dataset.type;
+                if (type === 'lab') {
+                    labTotal += fee;
+                } else {
+                    regularTotal += fee;
+                }
+                regularCount++;
+            });
+
+            // Elective fee
+            const electiveVal = document.getElementById('elective_subject')?.value || "";
+            const electiveFee = electiveVal ? parseFloat(electiveVal.split('|')[3].replace(/[₹$,]/g, '')) : 750;
+
+            // Backlog fee
+            let backlogTotal = 0;
+            let backlogCount = 0;
+            document.querySelectorAll('.backlog-item:checked').forEach(cb => {
+                backlogTotal += parseFloat(cb.value) || 0;
+                backlogCount++;
+            });
+
+            const processingFee = 350;
+            const grandTotal = regularTotal + labTotal + electiveFee + backlogTotal + processingFee;
+            const totalPapersCount = regularCount + (electiveVal ? 1 : 0) + backlogCount;
+
+            // Update UI elements with Indian Rupee formatting
+            document.getElementById('feeRegularPapers').textContent = `₹${regularTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            document.getElementById('feeLabPapers').textContent = `₹${labTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            document.getElementById('feeElectivePaper').textContent = `₹${electiveFee.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            document.getElementById('feeBacklogPapers').textContent = `₹${backlogTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            document.getElementById('feeTotalAmount').textContent = `₹${grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            document.getElementById('badgeSubjectCount').textContent = `${totalPapersCount} Paper(s) Selected`;
+        }
+
+        // Select Payment Card
+        function selectPaymentOption(cardEl, mode) {
+            document.querySelectorAll('.payment-option-card').forEach(el => el.classList.remove('selected'));
+            cardEl.classList.add('selected');
+            document.getElementById('examForm').dataset.paymentMethod = mode;
+            showToast(`💳 Payment method set to: ${cardEl.querySelector('strong').innerText}`);
+        }
+
+        // Toast Notification Trigger
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toastMessage');
+            toast.querySelector('span').innerText = message;
+            toast.classList.toggle('toast-error', isError);
+            toast.classList.toggle('toast-success', !isError);
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // Save progress draft
+        function saveDraft() {
+            showToast("💾 Registration draft saved to local browser session!");
+        }
+
+        // Filter master timetable
+        function filterSchedule() {
+            const query = document.getElementById('scheduleSearch').value.toLowerCase();
+            document.querySelectorAll('.schedule-card').forEach(card => {
+                const text = card.dataset.title + " " + card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        // Handle Registration Submission & Auto-Populate Admit Card
+        async function handleRegistrationSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('examForm');
+            const submitButton = form.querySelector('[type="submit"]');
+            const electiveParts = document.getElementById('elective_subject').value.split('|');
+            const registration = {
+                roll_no: document.getElementById('roll_no').value,
+                enrollment: document.getElementById('enrollment').value,
+                student_name: document.getElementById('student_name').value,
+                program: document.getElementById('program').value,
+                semester: document.getElementById('semester').value,
+                exam_session: document.getElementById('exam_session').value,
+                exam_mode: document.getElementById('exam_mode').value,
+                exam_center: document.getElementById('exam_center').value,
+                emergency_phone: document.getElementById('emergency_phone').value,
+                scribe_needed: document.getElementById('scribe_needed').checked,
+                ground_floor: document.getElementById('ground_floor').checked,
+                extra_time: document.getElementById('extra_time').checked,
+                declaration: document.getElementById('declaration').checked,
+                payment_method: form.dataset.paymentMethod,
+                subject_codes: Array.from(document.querySelectorAll('.subject-checkbox:checked'), checkbox => checkbox.dataset.code),
+                elective_code: electiveParts[0],
+                backlog_codes: Array.from(document.querySelectorAll('.backlog-item:checked'), checkbox => checkbox.dataset.code)
+            };
+
+            submitButton.disabled = true;
+            try {
+                const response = await fetch('/api/exam-registrations', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registration)
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Exam registration could not be saved.');
+
+                const studentName = document.getElementById('student_name').value;
+                const rollNo = document.getElementById('roll_no').value;
+                const enrollment = document.getElementById('enrollment').value;
+                const program = document.getElementById('program').value;
+                const sem = document.getElementById('semester').value;
+                const session = document.getElementById('exam_session').value;
+                const center = document.getElementById('exam_center').value;
+
+                document.getElementById('ticketCandidateName').textContent = studentName;
+                document.getElementById('ticketRollNo').textContent = rollNo;
+                document.getElementById('ticketEnrollment').textContent = enrollment;
+                document.getElementById('ticketProgram').textContent = program;
+                document.getElementById('ticketSemester').textContent = `Semester ${sem} | ${session}`;
+                document.getElementById('ticketCenter').textContent = center;
+
+                const ticketTbody = document.getElementById('ticketScheduleBody');
+                ticketTbody.innerHTML = '';
+                let itemIndex = 1;
+
+                document.querySelectorAll('.subject-checkbox:checked').forEach(cb => {
+                    const code = cb.dataset.code;
+                    const title = cb.dataset.title;
+                    const date = cb.dataset.date;
+                    const shift = cb.dataset.type === 'lab' ? '10:00 AM - 01:00 PM' : '09:30 AM - 12:30 PM';
+                    const hall = cb.dataset.type === 'lab' ? 'Lab 301 (Workstation 12)' : 'Hall A-102 (Seat ' + (itemIndex * 11) + ')';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${itemIndex++}</td>
+                        <td><strong>${code}</strong></td>
+                        <td style="text-align: left;">${title}</td>
+                        <td>${date}</td>
+                        <td>${shift}</td>
+                        <td>${hall}</td>
+                        <td></td>
+                    `;
+                    ticketTbody.appendChild(tr);
+                });
+
+                const electiveVal = document.getElementById('elective_subject')?.value;
+                if (electiveVal) {
+                    const parts = electiveVal.split('|');
+                    const code = parts[0];
+                    const title = parts[1];
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${itemIndex++}</td>
+                        <td><strong>${code}</strong></td>
+                        <td style="text-align: left;">${title} (Elective)</td>
+                        <td>08-Dec-2026</td>
+                        <td>02:00 PM - 05:00 PM</td>
+                        <td>Hall B-204 (Seat 19)</td>
+                        <td></td>
+                    `;
+                    ticketTbody.appendChild(tr);
+                }
+
+                document.querySelectorAll('.backlog-item:checked').forEach(cb => {
+                    const code = cb.dataset.code;
+                    const title = cb.dataset.name;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${itemIndex++}</td>
+                        <td><strong>${code}</strong></td>
+                        <td style="text-align: left;">${title} (Backlog)</td>
+                        <td>12-Dec-2026</td>
+                        <td>02:00 PM - 05:00 PM</td>
+                        <td>Hall C-301 (Seat 08)</td>
+                        <td></td>
+                    `;
+                    ticketTbody.appendChild(tr);
+                });
+
+                showToast(`🎉 Registration saved (ID ${result.registration_id}). Hall Ticket generated.`);
+                switchTab('admit-card-tab');
+            } catch (error) {
+                showToast(error.message || 'Exam registration could not be saved. Please try again.', true);
+            } finally {
+                submitButton.disabled = false;
+            }
+        }
+
+        // Mock JSON download
+        function downloadSlipMock() {
+            const slipData = {
+                university: "SRTD University",
+                student: document.getElementById('student_name').value,
+                enrollment: document.getElementById('enrollment').value,
+                program: document.getElementById('program').value,
+                semester: document.getElementById('semester').value,
+                totalPaid: document.getElementById('feeTotalAmount').textContent,
+                generatedAt: new Date().toISOString(),
+                status: "CONFIRMED_AND_PAID"
+            };
+            const blob = new Blob([JSON.stringify(slipData, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `SRTD_HallTicket_${slipData.enrollment}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("📥 Hall Ticket data file downloaded!");
+        }
+    </script>
+</body>
+</html>

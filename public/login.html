@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login | University Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="srtd_logo.svg" alt="SRTD Logo" class="logo-icon">
+                <h1>SRTD University</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="registration.html">Admissions</a></li>
+                    <li><a href="exam_registration.html">Exams</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="login.html" class="active">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container" style="max-width: 400px; margin-top: 5rem;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Student Login</h2>
+            
+            <form id="loginForm" action="/api/login" method="POST">
+                <div class="form-group">
+                    <label for="student_id">Email Address</label>
+                    <input type="email" id="student_id" name="student_id" required placeholder="Enter your registered email address">
+                </div>
+
+                <div class="form-group">
+                    <label for="login_pwd">Password</label>
+                    <input type="password" id="login_pwd" name="login_pwd" required maxlength="128" placeholder="Enter Password">
+                </div>
+
+                <div class="form-group checkbox-group" style="justify-content: space-between;">
+                    <div>
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember" style="margin:0; font-weight:normal; font-size: 0.9rem;">Remember Me</label>
+                    </div>
+                    <a href="#" style="font-size: 0.9rem; color: var(--secondary-color); text-decoration: none;">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Secure Login</button>
+                <p id="formMessage" role="status" aria-live="polite"></p>
+                
+                <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+                    Don't have an account? <a href="registration.html" style="color: var(--secondary-color); font-weight: bold;">Register Here</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <footer style="margin-top: 5rem;">
+        <p>&copy; 2026 SRTD University Student Management Portal.</p>
+    </footer>
+    <script src="app.js" defer></script>
+</body>
+</html>

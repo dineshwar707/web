@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Student Management Portal | Home</title>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Internal CSS -->
+    <style>
+        .highlight-text {
+            color: #ed8936;
+            font-weight: 700;
+        }
+        .info-section {
+            background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80') center/cover;
+            padding: 5rem 2rem;
+            color: white;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(26, 54, 93, 0.8);
+            border-radius: 12px;
+        }
+        .info-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Semantic Header and Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="srtd_logo.svg" alt="SRTD Logo" class="logo-icon">
+                <h1>SRTD University</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="registration.html">Admissions</a></li>
+                    <li><a href="exam_registration.html">Exams</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="login.html" style="border: 1px solid white;">Login</a></li> <!-- Inline CSS -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Semantic Main Section -->
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome to SRTD University Student Portal</h2>
+                <!-- Inline CSS used here -->
+                <p style="font-size: 1.2rem; line-height: 1.8;">Manage your academic journey with our comprehensive <span class="highlight-text">Student Management System</span>. Access your courses, register for exams, and stay connected with the university administration.</p>
+                <a href="registration.html" class="btn">Apply Now</a>
+                <a href="login.html" class="btn" style="background-color: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); margin-left: 10px;">Student Portal</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" alt="Students on campus" style="width: 100%; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+
+        <section class="features">
+            <article class="feature-card">
+                <h3>Online Admissions</h3>
+                <p>Register online for various undergraduate and postgraduate programs seamlessly.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Exam Portal</h3>
+                <p>Register for your semester examinations and download your hall tickets instantly.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Student Dashboard</h3>
+                <p>Track attendance, submit assignments, and view course materials in one place.</p>
+            </article>
+        </section>
+
+        <section class="info-section">
+            <div class="info-content">
+                <h2>Empowering Next Generation Leaders</h2>
+                <p>Join our vibrant campus community and unlock your full potential.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Semantic Footer -->
+    <footer>
+        <p>&copy; 2026 SRTD University Student Management Portal. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

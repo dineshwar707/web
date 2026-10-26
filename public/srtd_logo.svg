@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <!-- Background Badge -->
+  <rect width="200" height="200" rx="40" fill="#ffffff" />
+  
+  <!-- Subtle border -->
+  <rect x="2" y="2" width="196" height="196" rx="38" fill="none" stroke="#e2e8f0" stroke-width="4" />
+
+  <!-- Graduation Cap (Mortarboard) -->
+  <g id="graduation-cap">
+    <!-- Diamond Cap Top -->
+    <polygon points="100,28 172,56 100,84 28,56" fill="#1a365d" />
+    <polygon points="100,34 162,56 100,78 38,56" fill="#2b6cb0" />
+    <polygon points="100,40 148,56 100,72 52,56" fill="#ed8936" />
+    
+    <!-- Cap Skull Base -->
+    <path d="M 64,68 L 64,88 C 64,102 136,102 136,88 L 136,68 Z" fill="#1a365d" />
+
+    <!-- Button & Tassel -->
+    <circle cx="100" cy="56" r="4" fill="#ffffff" />
+    <path d="M 100,56 Q 145,62 152,86 L 152,106" fill="none" stroke="#ed8936" stroke-width="3" stroke-linecap="round" />
+    <polygon points="148,106 156,106 154,120 150,120" fill="#ed8936" />
+    <circle cx="152" cy="106" r="3" fill="#dd6b20" />
+  </g>
+
+  <!-- Monogram Letters "SRTD" in Modern Tech Interlocking Style -->
+  <g id="srtd-letters" transform="translate(0, 10)">
+    <!-- Letter S (Orange & Blue) -->
+    <path d="M 52,112 C 40,112 32,120 32,130 C 32,142 50,146 50,154 C 50,160 42,164 34,162" 
+          fill="none" stroke="#ed8936" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- Letter R (Deep Navy Blue) -->
+    <path d="M 66,168 L 66,112 L 84,112 C 94,112 100,118 100,128 C 100,138 92,142 82,142 L 66,142 M 82,142 L 98,168" 
+          fill="none" stroke="#1a365d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- Letter T (Orange Bar & Navy Stem) -->
+    <path d="M 106,114 L 138,114" fill="none" stroke="#ed8936" stroke-width="9" stroke-linecap="round" />
+    <path d="M 122,114 L 122,168" fill="none" stroke="#1a365d" stroke-width="9" stroke-linecap="round" />
+    
+    <!-- Letter D (Deep Navy Blue) -->
+    <path d="M 148,168 L 148,112 L 160,112 C 176,112 186,124 186,140 C 186,156 176,168 160,168 Z" 
+          fill="none" stroke="#1a365d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- Accent Underline Bar -->
+  <rect x="32" y="184" width="154" height="4" rx="2" fill="url(#blueOrangeGrad)" />
+  
+  <defs>
+    <linearGradient id="blueOrangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ed8936" />
+      <stop offset="40%" stop-color="#2b6cb0" />
+      <stop offset="100%" stop-color="#1a365d" />
+    </linearGradient>
+  </defs>
+</svg>
